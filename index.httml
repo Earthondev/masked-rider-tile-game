@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Masked Rider Tile Reveal Game</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<header>
+  <img src="assets/images/logo.png" alt="Masked Rider Logo" id="logo" />
+  <h1>Masked Rider Tile Reveal</h1>
+</header>
+
+<main>
+  <div id="questionTitle">Loading...</div>
+  <div id="grid" aria-label="Game grid" role="grid"></div>
+  <div id="buttons">
+    <button id="revealAllBtn" aria-label="Reveal all tiles">Reveal All</button>
+    <button id="nextQuestionBtn" aria-label="Next question">Next Question</button>
+  </div>
+</main>
+
+<audio id="flipSound" src="assets/sounds/flip.mp3" preload="auto"></audio>
+
+<script src="script.js"></script>
+
+</body>
+</html>
