@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "start": "npx serve .",
-        "deploy": "gh-pages -d ."
+        "build": "rm -rf dist && mkdir dist && cp *.html *.js *.css dist/ && cp -r assets dist/ && touch dist/.nojekyll",
+        "deploy": "npm run build && gh-pages -d dist"
     },
     "keywords": [
         "game",
