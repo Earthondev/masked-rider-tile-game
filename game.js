@@ -117,11 +117,22 @@ function openTile(tileElement, index) {
 
 // Function to reveal all tiles and show the answer
 function revealAll() {
-    const tiles = document.querySelectorAll('.tile');
-    tiles.forEach((tile, i) => {
-        if (!tile.classList.contains('open')) {
-            openTile(tile, i);
-        }
+    // Convert NodeList to Array and filter unopened tiles
+    const tilesToOpen = Array.from(document.querySelectorAll('.tile'))
+        .filter(tile => !tile.classList.contains('open'));
+
+    if (tilesToOpen.length === 0) return; // Nothing to open
+
+    // Shuffle array for better effect, or just sequential?
+    // Sequential looks like a "scan". Let's do random for "chaos" or sequential for "wipe".
+    // Let's do a fast sequential wipe.
+
+    tilesToOpen.forEach((tile, i) => {
+        setTimeout(() => {
+            // Get index from dataset again to be safe
+            const index = parseInt(tile.dataset.index);
+            openTile(tile, index);
+        }, i * 30); // 30ms delay between each tile for a fast wipe effect
     });
 
     // แสดงชื่อคำถามเมื่อเฉลย
