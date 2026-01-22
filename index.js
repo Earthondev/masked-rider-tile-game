@@ -3,7 +3,7 @@
 // !!! IMPORTANT: Replace with your actual Google Drive Folder ID !!!
 // This is the ID of the Google Drive folder containing your mystery images.
 // Example: "16qekyYH7LHTySVMTja-4XJm-4pO-nX1x"
-const GOOGLE_DRIVE_FOLDER_ID = "16qekyYH7LHTySVMTja-4XJm-4pO-nX1x"; 
+const GOOGLE_DRIVE_FOLDER_ID = "16qekyYH7LHTySVMTja-4XJm-4pO-nX1x";
 
 // !!! IMPORTANT: Replace with your actual Google Apps Script Deployment URL !!!
 // This is the URL obtained after deploying your Google Apps Script as a Web App.
@@ -27,13 +27,17 @@ async function fetchImagesFromDrive() {
             throw new Error(`HTTP error! สถานะ: ${response.status}`);
         }
         const data = await response.json();
-        
+
+        if (!data || !Array.isArray(data.images)) {
+            throw new Error('รูปแบบข้อมูลจาก API ไม่ถูกต้อง (ไม่พบ data.images)');
+        }
+
         // Map the fetched images to include a 'question' property
         // The question is derived from the image name, cleaning up common file extensions/separators.
         fetchedImages = data.images.map(img => ({
             ...img,
             // Example: "KamenRider_Ichigo.jpg" becomes "Kamen Rider Ichigo"
-            question: img.name.replace(/(_|-|\.jpg|\.png|\.gif|\.webp)/g, ' ').trim() 
+            question: img.name.replace(/(_|-|\.jpg|\.png|\.gif|\.webp)/g, ' ').trim()
         }));
 
         if (fetchedImages.length === 0) {

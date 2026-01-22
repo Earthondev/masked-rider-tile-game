@@ -57,6 +57,10 @@ function loadNextQuestion() {
     currentImageIndex = randomIndex;
     currentImage = allQuizImages[currentImageIndex];
 
+    // Preload image
+    const imgPreloader = new Image();
+    imgPreloader.src = currentImage.url;
+
     // ไม่ต้องโชว์คำถามทันที
     questionTitleElement.textContent = '';
     questionTitleElement.style.color = '';
@@ -94,9 +98,13 @@ function openTile(tileElement, index) {
     tileElement.style.backgroundImage = `url(${currentImage.url})`;
 
     // Calculate background position for the specific tile
-    // Each tile is 1/GRID_SIZE (20%) of the total image width/height
-    const xOffset = (index % GRID_SIZE) * (100 / GRID_SIZE);
-    const yOffset = Math.floor(index / GRID_SIZE) * (100 / GRID_SIZE);
+    // Formula for background-position percentage: (value / (total - 1)) * 100
+    // for a 5x5 grid, we want 0%, 25%, 50%, 75%, 100% steps.
+    const xStep = 100 / (GRID_SIZE - 1);
+    const yStep = 100 / (GRID_SIZE - 1);
+
+    const xOffset = (index % GRID_SIZE) * xStep;
+    const yOffset = Math.floor(index / GRID_SIZE) * yStep;
     tileElement.style.backgroundPosition = `-${xOffset}% -${yOffset}%`;
 
     openedTiles.add(index); // Mark tile as opened
