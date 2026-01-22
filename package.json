@@ -4,7 +4,8 @@
     "description": "Masked Rider Tile Puzzle Game",
     "main": "index.js",
     "scripts": {
-        "start": "npx serve ."
+        "start": "npx serve .",
+        "deploy": "gh-pages -d ."
     },
     "keywords": [
         "game",
@@ -13,5 +14,7 @@
     ],
     "author": "",
     "license": "ISC",
-    "dependencies": {}
+    "devDependencies": {
+        "gh-pages": "^6.3.0"
+    }
 }
