@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masked Rider Tile Puzzle</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Load Orbitron font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <!-- Replace with your actual Masked Rider logo image. Example: src="assets/images/masked-rider-logo.png" -->
+        <!-- Placeholder image used for demonstration -->
+        <img id="logo" src="https://placehold.co/120x120/E60012/FFFFFF?text=RIDER" alt="Masked Rider Logo">
+        <h1>Masked Rider Tile Puzzle</h1>
+    </header>
+
+    <main>
+        <div id="questionTitle"></div>
+        <div id="grid"></div>
+        <div id="controls">
+            <button id="nextQuestionBtn">คำถามถัดไป</button>
+            <button id="revealAllBtn">เฉลยทั้งหมด</button>
+            <button id="resetGameBtn">รีเซ็ตปัจจุบัน</button>
+            <button id="backToHomeBtn">กลับหน้าหลัก</button>
+        </div>
+    </main>
+
+    <!-- Sound Effects -->
+    <!-- You need to place your actual sound files in the specified paths -->
+    <audio id="flipSound" src="assets/sfx/tile-flip.mp3" preload="auto"></audio>
+    <audio id="revealSound" src="assets/sfx/reveal-all.mp3" preload="auto"></audio>
+
+    <script src="game.js"></script>
+</body>
+</html>

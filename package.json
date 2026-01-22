@@ -1,0 +1,20 @@
+{
+    "name": "masked-rider-tile-game",
+    "version": "1.0.0",
+    "description": "Masked Rider Tile Puzzle Game",
+    "main": "index.js",
+    "scripts": {
+        "start": "npx serve .",
+        "deploy": "gh-pages -d ."
+    },
+    "keywords": [
+        "game",
+        "masked-rider",
+        "puzzle"
+    ],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "gh-pages": "^6.3.0"
+    }
+}
