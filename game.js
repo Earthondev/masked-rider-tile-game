@@ -20,10 +20,10 @@ grid.parentNode.insertBefore(playerInfoDiv, grid);
 const flipSound = document.getElementById('flipSound');
 const revealSound = document.getElementById('revealSound');
 
-const GRID_SIZE = 5;
-const NUM_TILES = GRID_SIZE * GRID_SIZE;
+let GRID_SIZE = 5;
+let NUM_TILES = GRID_SIZE * GRID_SIZE;
 
-let gameSettings = null; // { players: [], images: [] }
+let gameSettings = null; // { players: [], images: [], gridSize: 5 }
 let allQuizImages = [];
 let currentImageIndex = -1;
 let currentImage = null;
@@ -37,6 +37,10 @@ function loadGameSettings() {
     if (settingsJson) {
         gameSettings = JSON.parse(settingsJson);
         allQuizImages = gameSettings.images;
+
+        // Load Grid Size
+        GRID_SIZE = gameSettings.gridSize || 5;
+        NUM_TILES = GRID_SIZE * GRID_SIZE;
 
         // Shuffle images initially
         allQuizImages.sort(() => Math.random() - 0.5);
@@ -63,11 +67,7 @@ function updatePlayerUI() {
         </div>
     `;
 }
-// Duplicates removed
 
-// Duplicate variables removed.
-
-// Function to select and display the next random image
 function loadNextQuestion() {
     if (allQuizImages.length === 0) {
         console.error('ไม่พบภาพสำหรับเล่นเกม');
@@ -75,12 +75,6 @@ function loadNextQuestion() {
     }
 
     // Check if we played all
-    if (allQuizImages.length === 0) { // Should check played count if we want unique
-        // For now, infinite loop or random is fine as per original logic, 
-        // but let's try to remove played ones if possible. 
-        // Original logic: let availableIndices...
-    }
-
     let availableIndices = allQuizImages
         .map((_, i) => i)
         .filter(idx => idx !== currentImageIndex);
@@ -111,14 +105,16 @@ function loadNextQuestion() {
 
 function buildGrid() {
     grid.innerHTML = '';
-    // Calculate tile size or just rely on CSS grid
-    // CSS Grid handles layout. We just need 25 divs.
+
+    // Dynamic Grid Layout
+    grid.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
+    grid.style.gridTemplateRows = `repeat(${GRID_SIZE}, 1fr)`;
 
     for (let i = 0; i < NUM_TILES; i++) {
         const tile = document.createElement('div');
         tile.classList.add('tile');
         tile.dataset.index = i;
-        tile.textContent = i + 1; // Show numbers 1-25
+        tile.textContent = i + 1; // Show numbers
 
         tile.addEventListener('click', () => {
             if (!tile.classList.contains('open') && !isRoundOver) {
@@ -137,6 +133,9 @@ function openTile(tileElement, index) {
     tileElement.classList.add('open');
     tileElement.textContent = ''; // Hide the number
     tileElement.style.backgroundImage = `url(${currentImage.url})`;
+
+    // Dynamic Background Size
+    tileElement.style.backgroundSize = `${GRID_SIZE * 100}% ${GRID_SIZE * 100}%`;
 
     // Formula for background-position percentage: (value / (total - 1)) * 100
     const xStep = 100 / (GRID_SIZE - 1);
@@ -163,16 +162,6 @@ function handleCorrectAnswer() {
     isRoundOver = true;
     revealAll();
 
-    // The player who answered likely just played or it's their turn
-    // If we auto-switch turn on flip, the "current player" is the NEXT one.
-    // So the point should go to the PREVIOUS player?
-    // Or we allow anyone to buzz in?
-    // Let's assume the "Turn" player guessed correctly BEFORE flipping?
-    // Or After flipping, they guess.
-    // If I flip, and I see it, I guess.
-    // So the point goes to the player who flipped last.
-    // We switched turn in openTile... so we need `prevPlayerIndex`.
-
     let scorerIndex = (currentPlayerIndex - 1 + gameSettings.players.length) % gameSettings.players.length;
     gameSettings.players[scorerIndex].score++;
 
@@ -196,7 +185,9 @@ function revealAll() {
                 tile.classList.add('open');
                 tile.textContent = '';
                 tile.style.backgroundImage = `url(${currentImage.url})`;
-                // ... calc pos ...
+
+                tile.style.backgroundSize = `${GRID_SIZE * 100}% ${GRID_SIZE * 100}%`;
+
                 const xStep = 100 / (GRID_SIZE - 1);
                 const yStep = 100 / (GRID_SIZE - 1);
                 const xOffset = (index % GRID_SIZE) * xStep;
@@ -244,6 +235,10 @@ function setupMultiplayerButtons() {
 
     // Update Reveal All Text
     revealAllBtn.textContent = 'ยอดแพ้ / เฉลย';
+
+    // Setup Next Button
+    nextQuestionBtn.onclick = loadNextQuestion;
+    revealAllBtn.onclick = revealAll;
 }
 
 // Initialize the game when the page loads

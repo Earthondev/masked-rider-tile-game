@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masked Rider Tile Puzzle</title>
+    <title>เกมเปิดป้ายทายภาพ (Masked Rider Tile Puzzle)</title>
     <link rel="stylesheet" href="style.css">
     <!-- Load Orbitron font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 <body>
     <header>
         <img id="logo" src="assets/images/logo.png" alt="Game Logo">
-        <h1>Mystery Tile Puzzle</h1>
+        <h1>เกมปริศนาเปิดป้ายทายภาพ</h1>
     </header>
 
     <main>
@@ -32,14 +32,34 @@
 
             <div id="playerInputs" class="control-group">
                 <!-- Player inputs will be generated here -->
-                <input type="text" id="player1" placeholder="ชื่อผู้เล่น 1" value="Player 1">
+                <input type="text" id="player1" placeholder="ชื่อผู้เล่น 1" value="ผู้เล่น 1">
+            </div>
+
+            <label>เลือกหมวดหมู่:</label>
+            <div class="checkbox-group">
+                <!-- Dynamic Categories will be injected here via JS -->
+                <p>กำลังโหลดหมวดหมู่...</p>
+            </div>
             </div>
 
             <div class="control-group">
-                <label>เลือกหมวดหมู่:</label>
-                <div class="checkbox-group">
-                    <!-- Dynamic Categories will be injected here via JS -->
-                    <p>Loading categories...</p>
+                <label for="gridSize">ขนาดตาราง:</label>
+                <select id="gridSize">
+                    <option value="3">3x3 (ง่าย)</option>
+                    <option value="4">4x4 (ปานกลาง)</option>
+                    <option value="5" selected>5x5 (มาตรฐาน)</option>
+                    <option value="6">6x6 (ยาก)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="customImageInput">เพิ่มภาพเอง (สะสมได้):</label>
+                <input type="file" id="customImageInput" multiple accept="image/*"
+                    style="display: block; width: 100%; margin-bottom: 5px;">
+                <button id="clearImagesBtn"
+                    style="background: #e60012; font-size: 0.8rem; padding: 5px 10px; min-width: auto;">ล้างภาพที่เลือก</button>
+                <div id="customImagePreview" style="margin-top: 10px; font-size: 0.9rem; color: #aaa;">
+                    ยังไม่มีภาพที่เลือก
                 </div>
             </div>
 

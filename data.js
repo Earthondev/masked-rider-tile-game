@@ -32,10 +32,10 @@ const GAME_DATA = {
     riders: {
         label: "Kamen Rider (ไรเดอร์)",
         items: [
-            { name: "Kamen Rider Ichigo", url: "https://placehold.co/600x600/222/0f0?text=Ichigo", category: "riders" },
-            { name: "Kamen Rider Kuuga", url: "https://placehold.co/600x600/d00/fd0?text=Kuuga", category: "riders" },
-            { name: "Kamen Rider Zero-One", url: "https://placehold.co/600x600/ff0/000?text=Zero-One", category: "riders" },
-            { name: "Kamen Rider Geats", url: "https://placehold.co/600x600/eee/d00?text=Geats", category: "riders" }
+            { name: "Kamen Rider Ichigo (คาเมนไรเดอร์ อิจิโกะ)", url: "https://placehold.co/600x600/222/0f0?text=Ichigo", category: "riders" },
+            { name: "Kamen Rider Kuuga (คาเมนไรเดอร์ คูกะ)", url: "https://placehold.co/600x600/d00/fd0?text=Kuuga", category: "riders" },
+            { name: "Kamen Rider Zero-One (คาเมนไรเดอร์ ซีโร่วัน)", url: "https://placehold.co/600x600/ff0/000?text=Zero-One", category: "riders" },
+            { name: "Kamen Rider Geats (คาเมนไรเดอร์ กีทส์)", url: "https://placehold.co/600x600/eee/d00?text=Geats", category: "riders" }
         ]
     }
 };
