@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,29 +9,46 @@
     <!-- Load Orbitron font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <header>
-        <!-- Replace with your actual Masked Rider logo image. Example: src="assets/images/masked-rider-logo.png" -->
-        <!-- Placeholder image used for demonstration -->
-        <img id="logo" src="https://placehold.co/120x120/E60012/FFFFFF?text=RIDER" alt="Masked Rider Logo">
-        <h1>Masked Rider Tile Puzzle</h1>
+        <img id="logo" src="https://placehold.co/120x120/FFD700/000000?text=GAME" alt="Game Logo">
+        <h1>Mystery Tile Puzzle</h1>
     </header>
 
     <main>
-        <section id="loading-section">
-            <h2>กำลังโหลดภาพปริศนา...</h2>
-            <p id="loadingStatus">กำลังดึงภาพจาก Google Drive... โปรดรอสักครู่</p>
-            <div class="loader"></div>
-        </section>
+        <section id="setup-section">
+            <h2>ตั้งค่าก่อนเริ่มเกม</h2>
 
-        <section id="game-start-section" style="display: none;">
-            <h2>ภาพพร้อมแล้ว!</h2>
-            <p id="imageCountStatus"></p>
-            <button id="startGameBtn" disabled>เริ่มเกม</button>
-            <p class="note">โปรดตรวจสอบว่าโฟลเดอร์ Google Drive ของคุณสามารถเข้าถึงได้แบบ "Anyone".</p>
+            <div class="control-group">
+                <label for="numPlayers">จำนวนผู้เล่น:</label>
+                <select id="numPlayers">
+                    <option value="1">1 คน</option>
+                    <option value="2">2 คน</option>
+                    <option value="3">3 คน</option>
+                    <option value="4">4 คน</option>
+                </select>
+            </div>
+
+            <div id="playerInputs" class="control-group">
+                <!-- Player inputs will be generated here -->
+                <input type="text" id="player1" placeholder="ชื่อผู้เล่น 1" value="Player 1">
+            </div>
+
+            <div class="control-group">
+                <label>เลือกหมวดหมู่:</label>
+                <div class="checkbox-group">
+                    <!-- Dynamic Categories will be injected here via JS -->
+                    <p>Loading categories...</p>
+                </div>
+            </div>
+
+            <button id="startGameBtn">เริ่มเกม</button>
         </section>
     </main>
 
+    <script src="data.js"></script>
     <script src="index.js"></script>
 </body>
+
 </html>

@@ -22,10 +22,12 @@ header {
 
 #logo {
   width: 120px;
-  height: auto; /* Maintain aspect ratio */
+  height: auto;
+  /* Maintain aspect ratio */
   margin-bottom: 10px;
   filter: drop-shadow(0 0 4px #e60012);
-  border-radius: 50%; /* Make it round if desired */
+  border-radius: 50%;
+  /* Make it round if desired */
 }
 
 h1 {
@@ -38,7 +40,8 @@ h1 {
 
 main {
   width: 100%;
-  max-width: 500px; /* Increased max-width slightly for better spacing */
+  max-width: 500px;
+  /* Increased max-width slightly for better spacing */
   padding: 20px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -46,55 +49,63 @@ main {
   margin-top: 20px;
 }
 
-/* --- Loading Section (index.html) --- */
-#loading-section, #game-start-section {
-    text-align: center;
-    padding: 20px;
+/* --- Setup Section (Refreshed) --- */
+#setup-section {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
 
-#loading-section h2, #game-start-section h2 {
-    color: #ff2e2e;
-    font-size: 1.8rem;
-    text-shadow: 0 0 5px #ff2e2e;
-    margin-bottom: 15px;
+.control-group {
+  margin-bottom: 20px;
+  text-align: left;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-#loadingStatus {
-    font-style: italic;
-    color: #ccc;
-    margin-bottom: 20px;
+.control-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #ff2e2e;
+  font-weight: bold;
 }
 
-.loader {
-    border: 8px solid #333;
-    border-top: 8px solid #e60012;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
+select,
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #555;
+  background: #222;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+select:focus,
+input[type="text"]:focus {
+  border-color: #e60012;
+  outline: none;
 }
 
-#imageCountStatus {
-    font-size: 1.2rem;
-    color: #0f0; /* Green for success */
-    margin-bottom: 20px;
-    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+.checkbox-group label {
+  display: block;
+  color: #eee;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-weight: normal;
 }
 
-.note {
-    font-size: 0.9rem;
-    color: #aaa;
-    margin-top: 20px;
+.checkbox-group input {
+  margin-right: 10px;
+  accent-color: #e60012;
 }
 
 /* --- Game Controls & Buttons (shared) --- */
-#controls, #game-start-section {
+#controls,
+#game-start-section {
   text-align: center;
   margin-top: 20px;
 }
@@ -108,25 +119,28 @@ button {
   font-size: 1rem;
   cursor: pointer;
   border-radius: 8px;
-  margin: 0 8px; /* Adjusted margin for responsiveness */
+  margin: 0 8px;
+  /* Adjusted margin for responsiveness */
   box-shadow: 0 0 8px #e60012;
   transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-  min-width: 120px; /* Ensure consistent button width */
+  min-width: 120px;
+  /* Ensure consistent button width */
 }
 
 button:hover,
 button:focus {
   background-color: #ff2e2e;
   box-shadow: 0 0 15px #ff2e2e;
-  transform: translateY(-2px); /* Slight lift effect */
+  transform: translateY(-2px);
+  /* Slight lift effect */
   outline: none;
 }
 
 button:disabled {
-    background-color: #555;
-    box-shadow: none;
-    cursor: not-allowed;
-    transform: none;
+  background-color: #555;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* --- Game Grid (game.html) --- */
@@ -134,11 +148,13 @@ button:disabled {
   font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 15px;
-  min-height: 40px; /* Ensure space for text */
+  min-height: 40px;
+  /* Ensure space for text */
   text-align: center;
   color: #ff2e2e;
   text-shadow: 0 0 8px #ff2e2e;
-  display: flex; /* Use flex to center vertically if content is short */
+  display: flex;
+  /* Use flex to center vertically if content is short */
   align-items: center;
   justify-content: center;
 }
@@ -161,7 +177,8 @@ button:disabled {
   background-color: #3a3a3a;
   border: 2px solid #770000;
   cursor: pointer;
-  font-size: 1.5rem; /* Larger numbers */
+  font-size: 1.5rem;
+  /* Larger numbers */
   color: #eee;
   font-weight: 700;
   display: flex;
@@ -170,19 +187,25 @@ button:disabled {
   user-select: none;
   border-radius: 5px;
   position: relative;
-  transition: all 0.4s ease; /* Generic transition */
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Shadow for numbers */
-  overflow: hidden; /* For ripple or effects */
+  transition: all 0.4s ease;
+  /* Generic transition */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  /* Shadow for numbers */
+  overflow: hidden;
+  /* For ripple or effects */
 }
 
 .tile::before {
   /* Tech pattern overlay */
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background:
-    linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.1) 49%, rgba(255,255,255,0.1) 51%, transparent 52%),
-    linear-gradient(-45deg, transparent 48%, rgba(255,255,255,0.1) 49%, rgba(255,255,255,0.1) 51%, transparent 52%);
+    linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.1) 49%, rgba(255, 255, 255, 0.1) 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(255, 255, 255, 0.1) 49%, rgba(255, 255, 255, 0.1) 51%, transparent 52%);
   background-size: 10px 10px;
   opacity: 0.3;
   pointer-events: none;
@@ -199,21 +222,33 @@ button:disabled {
 }
 
 .tile.open {
-  color: transparent; /* Hide number when open */
+  color: transparent;
+  /* Hide number when open */
   cursor: default;
   background-repeat: no-repeat;
-  background-size: 500% 500%; /* For 5x5 grid */
+  background-size: 500% 500%;
+  /* For 5x5 grid */
   border-color: #ff2e2e;
   box-shadow: 0 0 8px rgba(255, 46, 46, 0.7) inset;
-  
+
   /* FLIP ANIMATION */
   animation: flipTile 0.6s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
 }
 
 @keyframes flipTile {
-  0% { transform: rotateY(0); }
-  50% { transform: rotateY(180deg); background-color: #fff; } /* Flash white at mid-flip */
-  100% { transform: rotateY(360deg); }
+  0% {
+    transform: rotateY(0);
+  }
+
+  50% {
+    transform: rotateY(180deg);
+    background-color: #fff;
+  }
+
+  /* Flash white at mid-flip */
+  100% {
+    transform: rotateY(360deg);
+  }
 }
 
 /* Responsive adjustments */
@@ -221,21 +256,27 @@ button:disabled {
   h1 {
     font-size: 1.8rem;
   }
+
   main {
     padding: 15px;
   }
+
   #grid {
     width: 300px;
     height: 300px;
     gap: 4px;
   }
+
   .tile {
     font-size: 1.2rem;
   }
+
   button {
-    width: calc(50% - 16px); /* Two buttons per row on small screens */
+    width: calc(50% - 16px);
+    /* Two buttons per row on small screens */
     margin-bottom: 10px;
   }
+
   #controls {
     display: flex;
     flex-wrap: wrap;

@@ -1,70 +1,110 @@
-// index.js (For the Home Page - Image Fetching)
+// index.js (Multiplayer Setup & Category Selection)
 
-// !!! IMPORTANT: Replace with your actual Google Drive Folder ID !!!
-// This is the ID of the Google Drive folder containing your mystery images.
-// Example: "16qekyYH7LHTySVMTja-4XJm-4pO-nX1x"
-const GOOGLE_DRIVE_FOLDER_ID = "16qekyYH7LHTySVMTja-4XJm-4pO-nX1x";
-
-// !!! IMPORTANT: Replace with your actual Google Apps Script Deployment URL !!!
-// This is the URL obtained after deploying your Google Apps Script as a Web App.
-// Example: "https://script.google.com/macros/s/AKfycbx8A3ZM1ldVeltc28cF4S_PPRs7MZZckVo3ahljYFLClAjcdbU2d8qio7mhvwrGmi3N2w/exec"
-const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzD6d6RWeFfFVrzED1IRDda19PJ_nKzrx5EVAfHnuYNwCJ8JaQu8BdIxtLmigvQxUtY3Q/exec";
-
-const loadingSection = document.getElementById('loading-section');
-const gameStartSection = document.getElementById('game-start-section');
-const loadingStatus = document.getElementById('loadingStatus');
-const imageCountStatus = document.getElementById('imageCountStatus');
+const numPlayersSelect = document.getElementById('numPlayers');
+const playerInputsContainer = document.getElementById('playerInputs');
 const startGameBtn = document.getElementById('startGameBtn');
 
-let fetchedImages = []; // Stores objects with {name, url, question}
+// Function to generate player name inputs
+function updatePlayerInputs() {
+    const num = parseInt(numPlayersSelect.value);
+    playerInputsContainer.innerHTML = ''; // Clear existing
 
-// Function to fetch images from Google Drive via Google Apps Script
-async function fetchImagesFromDrive() {
-    loadingStatus.textContent = 'กำลังดึงภาพจาก Google Drive... โปรดรอสักครู่';
-    try {
-        const response = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?folderId=${GOOGLE_DRIVE_FOLDER_ID}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! สถานะ: ${response.status}`);
-        }
-        const data = await response.json();
-
-        if (!data || !Array.isArray(data.images)) {
-            throw new Error('รูปแบบข้อมูลจาก API ไม่ถูกต้อง (ไม่พบ data.images)');
-        }
-
-        // Map the fetched images to include a 'question' property
-        // The question is derived from the image name, cleaning up common file extensions/separators.
-        fetchedImages = data.images.map(img => ({
-            ...img,
-            // Example: "KamenRider_Ichigo.jpg" becomes "Kamen Rider Ichigo"
-            question: img.name.replace(/(_|-|\.jpg|\.png|\.gif|\.webp)/g, ' ').trim()
-        }));
-
-        if (fetchedImages.length === 0) {
-            loadingStatus.textContent = 'ไม่พบภาพในโฟลเดอร์ Google Drive ที่ระบุ โปรดตรวจสอบ Folder ID และการตั้งค่าสิทธิ์การเข้าถึง';
-            startGameBtn.disabled = true;
-        } else {
-            // Save images to localStorage for access by game.html
-            localStorage.setItem('maskedRiderQuizImages', JSON.stringify(fetchedImages));
-            imageCountStatus.textContent = `โหลดภาพปริศนาสำเร็จ ${fetchedImages.length} ภาพ`;
-            startGameBtn.disabled = false; // Enable start game button
-            loadingSection.style.display = 'none'; // Hide loading section
-            gameStartSection.style.display = 'block'; // Show start game section
-        }
-    } catch (error) {
-        console.error('ข้อผิดพลาดในการดึงภาพ:', error);
-        loadingStatus.textContent = `ไม่สามารถโหลดภาพได้: ${error.message}. โปรดตรวจสอบ Google Drive Folder ID และ Apps Script URL ว่าถูกต้อง และสคริปต์มีการตั้งค่าสิทธิ์ "Anyone"`;
-        startGameBtn.disabled = true;
-        loadingSection.style.display = 'block'; // Ensure loading section is visible to show error
-        gameStartSection.style.display = 'none';
+    for (let i = 1; i <= num; i++) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = `player${i}`;
+        input.placeholder = `ชื่อผู้เล่น ${i}`;
+        input.value = `Player ${i}`;
+        input.style.marginTop = '10px';
+        playerInputsContainer.appendChild(input);
     }
 }
 
-// Event listener for "Start Game" button
+// Event Listeners
+const categoriesContainer = document.querySelector('.checkbox-group');
+
+// Function to generate category checkboxes
+function renderCategoryOptions() {
+    categoriesContainer.innerHTML = ''; // Clear hardcoded
+
+    if (typeof GAME_DATA === 'undefined') {
+        categoriesContainer.textContent = 'Error: Data not loaded.';
+        return;
+    }
+
+    Object.keys(GAME_DATA).forEach(key => {
+        const catData = GAME_DATA[key];
+        const labelText = catData.label || key;
+
+        const label = document.createElement('label');
+        label.style.display = 'block';
+        label.style.cursor = 'pointer';
+        label.style.marginBottom = '5px';
+
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.value = key;
+        input.checked = true; // Default to checked
+        input.style.marginRight = '10px';
+        input.classList.add('category-checkbox'); // For easier selection
+
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(labelText));
+        categoriesContainer.appendChild(label);
+    });
+}
+
+
+// Start Game Logic
 startGameBtn.addEventListener('click', () => {
-    // Navigate to the game page
+    // 1. Get Players
+    const numPlayers = parseInt(numPlayersSelect.value);
+    const players = [];
+    for (let i = 1; i <= numPlayers; i++) {
+        const name = document.getElementById(`player${i}`).value.trim() || `Player ${i}`;
+        players.push({ name: name, score: 0 });
+    }
+
+    // 2. Get Categories & Images
+    // 2. Get Categories & Images
+    const checkboxes = document.querySelectorAll('.category-checkbox:checked');
+    const selectedCategories = Array.from(checkboxes).map(cb => cb.value); // ['animals', 'food']
+
+
+    if (selectedCategories.length === 0) {
+        alert('กรุณาเลือกหมวดหมู่อย่างน้อย 1 หมวด!');
+        return;
+    }
+
+    let gameImages = [];
+    selectedCategories.forEach(cat => {
+        if (typeof GAME_DATA !== 'undefined' && GAME_DATA[cat]) {
+            // New structure: GAME_DATA[cat] is { label: "...", items: [...] }
+            if (GAME_DATA[cat].items) {
+                gameImages = gameImages.concat(GAME_DATA[cat].items);
+            }
+        }
+    });
+
+    if (gameImages.length === 0) {
+        alert('ไม่พบข้อมูลภาพในหมวดที่เลือก หรือ data.js ไม่โหลด');
+        return;
+    }
+
+    // Prepare Data Object
+    const gameSettings = {
+        players: players,
+        images: gameImages
+    };
+
+    // Save to LocalStorage
+    localStorage.setItem('maskedRiderGameSettings', JSON.stringify(gameSettings));
+
+    // Redirect
     window.location.href = 'game.html';
 });
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', fetchImagesFromDrive);
+// Initialize inputs on load
+// Initialize inputs on load
+updatePlayerInputs();
+renderCategoryOptions();
